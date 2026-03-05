@@ -1,0 +1,19 @@
+topics:
+  orders.created:
+    partitions: 6
+    replication: 1
+    retention_ms: 604800000  # 7 days
+    cleanup_policy: delete
+    min_insync_replicas: 1
+  orders.quarantine:
+    partitions: 3
+    replication: 1
+    retention_ms: 2592000000  # 30 days
+    cleanup_policy: delete
+    min_insync_replicas: 1
+  orders.metrics:
+    partitions: 3
+    replication: 1
+    retention_ms: 2592000000  # 30 days
+    cleanup_policy: delete
+    min_insync_replicas: 1
