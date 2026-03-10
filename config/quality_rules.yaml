@@ -1,0 +1,32 @@
+rules:
+  - name: no_null_order_ids
+    field: order_id
+    check: not_null
+    severity: critical
+  - name: positive_quantity
+    field: quantity
+    check: greater_than
+    value: 0
+    severity: critical
+  - name: valid_event_type
+    field: event_type
+    check: in_list
+    values:
+      - order_created
+      - order_item_added
+      - order_confirmed
+      - order_shipped
+      - order_delivered
+      - order_cancelled
+    severity: critical
+  - name: reasonable_revenue
+    field: total_amount
+    check: between
+    min: 0.01
+    max: 50000.00
+    severity: warning
+  - name: timestamp_not_future
+    field: timestamp
+    check: not_future
+    tolerance_seconds: 300
+    severity: warning
