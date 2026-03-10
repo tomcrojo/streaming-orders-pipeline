@@ -1,0 +1,43 @@
+spark:
+  app_name: "OrderStreamProcessor"
+  checkpoint_location: "checkpoints/streaming"
+  trigger_interval: "10 seconds"
+  max_offsets_per_trigger: 10000
+  shuffle_partitions: 8
+
+  # Iceberg catalog configuration
+  catalog:
+    name: "nessie"
+    type: "rest"
+    uri: "http://nessie:19120/api/v1"
+    warehouse: "s3a://warehouse/"
+    s3:
+      endpoint: "http://minio:9000"
+      access_key: "admin"
+      secret_key: "password123"
+      path_style_access: "true"
+
+  # Serialization
+  serializer: "org.apache.spark.serializer.KryoSerializer"
+  kryo_registrator: ""
+
+  # Memory tuning
+  executor_memory: "2g"
+  driver_memory: "1g"
+  executor_cores: 2
+
+  # Parallelism
+  default_parallelism: 4
+  kafka_fetch_min_bytes: 1
+  kafka_max_partition_fetch_bytes: 1048576
+
+  # Streaming specific
+  watermark_delay: "10 minutes"
+  max_files_per_trigger: 1000
+
+kafka:
+  bootstrap_servers: "kafka:29092"
+  topic: "orders.created"
+  starting_offsets: "latest"
+  fail_on_data_loss: "false"
+  max_offsets_per_trigger: 10000
