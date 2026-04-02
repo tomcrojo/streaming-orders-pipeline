@@ -2,8 +2,6 @@
 
 from __future__ import annotations
 
-import pytest
-
 from src.storage.table_definitions import (
     ORDER_EVENTS_SCHEMA,
     ORDER_METRICS_SCHEMA,

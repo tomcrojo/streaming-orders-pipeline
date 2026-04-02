@@ -5,8 +5,6 @@ from __future__ import annotations
 import json
 import uuid
 
-import pytest
-
 from src.producer.order_producer import OrderEventGenerator, OrderProducer
 from src.producer.schemas import EVENT_TYPES
 
