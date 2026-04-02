@@ -5,9 +5,8 @@ from __future__ import annotations
 import argparse
 import logging
 import signal
-import sys
 
-from pyspark.sql import SparkSession
+from pyspark.sql import DataFrame, SparkSession
 from pyspark.sql import functions as F
 
 from src.consumer.config import (
@@ -18,7 +17,6 @@ from src.consumer.config import (
     S3_ACCESS_KEY,
     S3_ENDPOINT,
     S3_SECRET_KEY,
-    TRIGGER_INTERVAL,
     WATERMARK_DELAY,
     WAREHOUSE,
     NESSIE_URI,
@@ -37,13 +35,6 @@ from src.storage.iceberg_writer import (
     write_quality_metrics,
     write_anomalies,
 )
-from src.storage.table_definitions import (
-    ORDER_EVENTS_SCHEMA,
-    ORDER_METRICS_SCHEMA,
-    ORDER_QUALITY_SCHEMA,
-    ORDER_ANOMALIES_SCHEMA,
-)
-
 logging.basicConfig(
     level=logging.INFO,
     format="%(asctime)s [%(levelname)s] %(name)s: %(message)s",
@@ -81,7 +72,7 @@ def create_spark_session() -> SparkSession:
     return builder.getOrCreate()
 
 
-def build_kafka_source(spark: SparkSession) -> "DataFrame":
+def build_kafka_source(spark: SparkSession) -> DataFrame:
     """Build a streaming DataFrame from Kafka source."""
     return (
         spark.readStream.format("kafka")

@@ -7,7 +7,6 @@ import json
 import logging
 import random
 import signal
-import sys
 import time
 import uuid
 from datetime import datetime, timezone
@@ -17,11 +16,9 @@ from src.producer.config import (
     CUSTOMER_POOL_SIZE,
     DEFAULT_DURATION,
     DEFAULT_RATE,
-    KAFKA_TOPIC,
     PRODUCER_CONFIG,
     PRODUCT_CATALOG_SIZE,
 )
-from src.producer.schemas import EVENT_TYPES
 
 logging.basicConfig(
     level=logging.INFO,
