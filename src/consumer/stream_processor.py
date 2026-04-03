@@ -30,11 +30,12 @@ from src.consumer.transformations import (
 )
 from src.storage.iceberg_writer import (
     create_tables_if_not_exists,
-    write_raw_events,
+    write_anomalies,
     write_metrics,
     write_quality_metrics,
-    write_anomalies,
+    write_raw_events,
 )
+
 logging.basicConfig(
     level=logging.INFO,
     format="%(asctime)s [%(levelname)s] %(name)s: %(message)s",
