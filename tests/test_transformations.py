@@ -2,6 +2,8 @@
 
 from __future__ import annotations
 
+from datetime import datetime, timezone
+
 import pytest
 
 from pyspark.sql import SparkSession
@@ -157,13 +159,15 @@ class TestQualityChecks:
     def test_valid_records_pass(self, spark):
         from src.consumer.quality_checks import apply_quality_checks
 
+        event_timestamp = datetime.now(timezone.utc).isoformat()
+
         data = [
             (
                 "evt-1",
                 "order_created",
                 "ord-1",
                 "C1",
-                "2025-01-15T10:30:00+00:00",
+                event_timestamp,
                 {"total_amount": 50.0},
             ),
         ]
